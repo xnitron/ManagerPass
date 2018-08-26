@@ -11,7 +11,7 @@ namespace ManagerPass
        
         public string Site { get; set; }
         public string Password { get; set; }
-
+        public string Comment { get; set; }
         public Model ()
         {
         }
