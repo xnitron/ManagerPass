@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManagePass;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,9 +7,11 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ManagerPass
 {
+    
     class Program
     {
         static void Main(string[] args)
@@ -28,15 +31,15 @@ namespace ManagerPass
                 if (cki.Key == ConsoleKey.D1)
                 {
                     Console.Write("Site: ");
-                    model.Site = Console.ReadLine();
+                    view.Site = Console.ReadLine();
                     Console.Write("Password: ");
-                    model.Password = Console.ReadLine();
-                    controller.AddPass(model);
-
+                    view.Password = Console.ReadLine();
+                    controller.AddPass(view);
                 }
                 if (cki.Key == ConsoleKey.D2)
-                    controller.ShowPass();
+                    model.ShowPass();
 
+       
 
             } while (cki.Key != ConsoleKey.Escape);
             
