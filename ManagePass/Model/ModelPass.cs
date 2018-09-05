@@ -19,22 +19,22 @@ namespace ManagerPass
         {
 
         }
-        public void BinFile()
+        public void BinFile(string file)
         {
-            if (!File.Exists(filename))
-                using (FileStream fs = File.Create(filename))
+            if (!File.Exists(file))
+                using (FileStream fs = File.Create(file))
                     File.SetAttributes(filename, FileAttributes.Hidden); 
         }
         public void AddPass(NameValueCollection newPass)
         {
-            this.BinFile();
+            this.BinFile(filename);
             IFormatter formatter = new BinaryFormatter();
             using (FileStream s = File.OpenWrite(filename))
                 formatter.Serialize(s, newPass);
         }
         public void ShowPass()
         {
-            this.BinFile();
+            this.BinFile(filename);
             newPass.Clear();
             IFormatter formatter = new BinaryFormatter();
             using (FileStream s = File.OpenRead(filename))
