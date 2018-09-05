@@ -38,8 +38,13 @@ namespace ManagerPass
                 }
                 if (cki.Key == ConsoleKey.D2)
                     model.ShowPass();
+                if (cki.Key == ConsoleKey.D3)
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new SignUp());
+                }
 
-       
 
             } while (cki.Key != ConsoleKey.Escape);
             
