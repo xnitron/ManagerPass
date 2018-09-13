@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ManagePass.Properties {
+namespace PasswordManager.Properties {
     using System;
     
     
