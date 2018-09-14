@@ -20,7 +20,6 @@ namespace PasswordManager
             try
             {
                 model.AddPassword(site, password);
-
             }
             catch (Exception)
             {

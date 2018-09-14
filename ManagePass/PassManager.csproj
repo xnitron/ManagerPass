@@ -61,8 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerPass.cs" />
-    <Compile Include="Interfaces\IObservable.cs" />
-    <Compile Include="Interfaces\IObserver.cs" />
+    <Compile Include="Core\Observable.cs" />
+    <Compile Include="Core\Interfaces\IObserver.cs" />
     <Compile Include="Model\ModelPass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,13 +92,8 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lust_for_darkness400x600.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Sign-up-button-purple-200x50e.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

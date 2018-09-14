@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PasswordManager2.Properties {
+namespace ManagePass.Properties {
     using System;
     
     
@@ -57,26 +57,6 @@ namespace PasswordManager2.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap lust_for_darkness400x600 {
-            get {
-                object obj = ResourceManager.GetObject("lust_for_darkness400x600", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Sign_up_button_purple_200x50e {
-            get {
-                object obj = ResourceManager.GetObject("Sign-up-button-purple-200x50e", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

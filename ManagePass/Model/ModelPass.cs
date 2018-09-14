@@ -11,12 +11,12 @@ namespace PasswordManager
 
         private string _password = "";
 
+        private readonly string filename = "serialized.bin";
+
         public string Password
         {
             get { return _password; }
         }
-
-        private readonly string filename = "serialized.bin";
 
         private void CreateFile(string filename)
         {
@@ -47,6 +47,7 @@ namespace PasswordManager
         {
             DeserializeFile();
             _password = Passwords[site];
+
             NotifyObservers();
         }
 
@@ -63,7 +64,7 @@ namespace PasswordManager
 
             using (FileStream s = File.OpenRead(filename))
             {
-                Passwords = ((Dictionary<string, string>)formatter.Deserialize(s));
+                Passwords = (Dictionary<string, string>)formatter.Deserialize(s);
             }
         }
     }
