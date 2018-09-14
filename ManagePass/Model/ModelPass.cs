@@ -1,48 +1,69 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PasswordManager
 {
-    public class Model 
+    public class Model : Observable
     {
-        public readonly string filename = "serialized.bin";
+        private Dictionary<string, string> Passwords = new Dictionary<string, string>();
 
-        public void BinFile(string file)
+        private string _password = "";
+
+        public string Password
         {
-            if (!File.Exists(file))
-                using (FileStream fs = File.Create(file))
-                    File.SetAttributes(filename, FileAttributes.Hidden); 
+            get { return _password; }
         }
 
-        public void AddPass(NameValueCollection newPass)
+        private readonly string filename = "serialized.bin";
+
+        private void CreateFile(string filename)
         {
-            BinFile(filename);
-            IFormatter formatter = new BinaryFormatter();
-            using (FileStream s = File.OpenWrite(filename))
+            using (FileStream fs = File.Create(filename))
             {
-                formatter.Serialize(s, newPass);
+                File.SetAttributes(filename, FileAttributes.Hidden);
             }
         }
 
-        public void DeserializeFile(NameValueCollection newPass)
+        public void AddPassword(string site, string password)
         {
-            newPass.Clear();
-            BinFile(filename);
+            Passwords.Add(site, password);
+
+            if (!File.Exists(filename))
+            {
+                CreateFile(filename);
+            }
+
             IFormatter formatter = new BinaryFormatter();
+
+            using (FileStream s = File.OpenWrite(filename))
+            {
+                formatter.Serialize(s, Passwords);
+            }
+        }
+
+        public void GetPassword(string site)
+        {
+            DeserializeFile();
+            _password = Passwords[site];
+            NotifyObservers();
+        }
+
+        public void DeserializeFile()
+        {
+            Passwords.Clear();
+            
+            if (!File.Exists(filename))
+            {
+                CreateFile(filename);
+            }
+
+            IFormatter formatter = new BinaryFormatter();
+
             using (FileStream s = File.OpenRead(filename))
             {
-                try
-                {
-                    newPass.Add((NameValueCollection)formatter.Deserialize(s));
-                   
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("You do not have any passwords");
-                }
+                Passwords = ((Dictionary<string, string>)formatter.Deserialize(s));
             }
         }
     }

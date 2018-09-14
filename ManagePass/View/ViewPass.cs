@@ -1,47 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace PasswordManager
 {
-    public class View : IView, IObservable, IObserver
+    public class View : IObserver
     {
-        public string Site { get; set; }
-        public string Password { get; set; }
-        NameValueCollection newPass = new NameValueCollection();
-        private List<IObserver> observers;
-        Model model;
+        private Model model;
+        private Controller controller;
 
-
-        public View(Model model)
+        public View(Model model, Controller controller)
         {
-            observers = new List<IObserver>();
             this.model = model;
-            this.RegisterObserver(this);
-            this.NotifyObservers();
+            this.controller = controller;
+
+            this.model.RegisterObserver(this);
         }
 
-        public void RegisterObserver(IObserver observer)
+        public void Show()
         {
-            observers.Add(observer);
-        }
-
-        public void RemoveObserver(IObserver observer)
-        {
-            observers.Remove(observer);
-        }
-
-        public void NotifyObservers()
-        {
-            foreach (IObserver o in observers)
+            ConsoleKeyInfo cki;
+            do
             {
-                o.Update();
-            }
+                Console.WriteLine("New Password or View created passwords(Press 1 or 2). Esc to leave");
+
+                cki = Console.ReadKey(true);
+
+                if (cki.Key == ConsoleKey.D1)
+                {
+                    AddInfo();
+                }
+
+                if (cki.Key == ConsoleKey.D2)
+                {
+                    string site = Console.ReadLine();
+
+                    controller.GetPassword(site);
+                }
+
+            } while (cki.Key != ConsoleKey.Escape);
+        }
+
+        public void ShowError(string error)
+        {
+            Console.WriteLine(error);
         }
 
         public void Update()
         {
-            Console.WriteLine("New Password or View created passwords(Press 1 or 2). Esc to leave");
+            Console.WriteLine(model.Password);
         }
 
         public void AddInfo()
@@ -49,25 +54,17 @@ namespace PasswordManager
             try
             {
                 Console.Write("Site: ");
-                Site = Console.ReadLine();
+                string site = Console.ReadLine(); 
+             
                 Console.Write("Password: ");
-                Password = Console.ReadLine();
+                string password = Console.ReadLine();
+
+                controller.AddPassword(site, password);
             }
             catch (Exception)
             {
-                throw;
+                ShowError("ErrorView");
             }
-            
-            this.NotifyObservers();
         }
-
-        public void ShowPass()
-        {
-            model.DeserializeFile(newPass);
-            for (int i = 0; i < newPass.Count; i++)
-                Console.WriteLine("{0}  -  {1}", newPass.GetKey(i), newPass.Get(i));
-             this.NotifyObservers();
-        }
-
     }
 }

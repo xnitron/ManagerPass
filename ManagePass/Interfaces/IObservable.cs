@@ -1,11 +1,27 @@
-﻿
+﻿using System.Collections.Generic;
 
 namespace PasswordManager
 {
-    public interface IObservable
+    public abstract class Observable
     {
-        void RegisterObserver(IObserver observer);
-        void RemoveObserver(IObserver observer);
-        void NotifyObservers();
+        private List<IObserver> observers = new List<IObserver>();
+
+        public void RegisterObserver(IObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void RemoveObserver(IObserver observer)
+        {
+            observers.Remove(observer);
+        }
+
+        protected void NotifyObservers()
+        {
+            foreach (IObserver o in observers)
+            {
+                o.Update();
+            }
+        }
     }
 }

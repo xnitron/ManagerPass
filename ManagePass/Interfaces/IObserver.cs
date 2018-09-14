@@ -1,5 +1,4 @@
-﻿
-namespace PasswordManager
+﻿namespace PasswordManager
 {
     public interface IObserver
     {

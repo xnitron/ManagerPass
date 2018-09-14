@@ -1,27 +1,43 @@
 ﻿using System;
-using System.Collections.Specialized;
 
 namespace PasswordManager
 {
-
     public class Controller
     {
-        NameValueCollection newPass = new NameValueCollection();
-        IView view;
         Model model;
+        View view;
 
-        public Controller(IView view, Model model)
+        public Controller(Model model)
         {
-            this.view = view;
             this.model = model;
+            view = new View(model, this);   
+
+            view.Show();
         }
 
-        public void AddPass()
+        public void AddPassword(string site, string password)
         {
-            newPass.Add(view.Site, view.Password);
-            model.AddPass(newPass);
+            try
+            {
+                model.AddPassword(site, password);
+
+            }
+            catch (Exception)
+            {
+                view.ShowError("Error: Can't add new password");
+            }
         }
 
-    }
-   
+        public void GetPassword(string site)
+        {
+            try
+            {
+                model.GetPassword(site);
+            }
+            catch (Exception)
+            {
+                view.ShowError("Error: Can't get password");
+            }
+        }
+    } 
 }
