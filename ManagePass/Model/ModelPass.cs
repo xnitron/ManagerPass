@@ -7,7 +7,7 @@ namespace PasswordManager
 {
     public class Model : Observable
     {
-        private Dictionary<string, string> Passwords = new Dictionary<string, string>();
+        private Dictionary<string, string> passwords = new Dictionary<string, string>();
 
         private string _password = "";
 
@@ -28,7 +28,7 @@ namespace PasswordManager
 
         public void AddPassword(string site, string password)
         {
-            Passwords.Add(site, password);
+            passwords.Add(site, password);
 
             if (!File.Exists(filename))
             {
@@ -39,21 +39,21 @@ namespace PasswordManager
 
             using (FileStream s = File.OpenWrite(filename))
             {
-                formatter.Serialize(s, Passwords);
+                formatter.Serialize(s, passwords);
             }
         }
 
         public void GetPassword(string site)
         {
             DeserializeFile();
-            _password = Passwords[site];
+            _password = passwords[site];
 
             NotifyObservers();
         }
 
         public void DeserializeFile()
         {
-            Passwords.Clear();
+            passwords.Clear();
             
             if (!File.Exists(filename))
             {
@@ -64,7 +64,7 @@ namespace PasswordManager
 
             using (FileStream s = File.OpenRead(filename))
             {
-                Passwords = (Dictionary<string, string>)formatter.Deserialize(s);
+                passwords = (Dictionary<string, string>)formatter.Deserialize(s);
             }
         }
     }
